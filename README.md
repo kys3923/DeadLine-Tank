@@ -2,12 +2,12 @@ Shoot the Panzer!
 ===
 
 ## Table of Contents
-• Game Idea - [ ]
-• Tech Stack - [ ]
-• WireFrames - [ ]
-• MVP Goals - [ ]
-• Stretch Goals - [ ]
-• Roadblocks - [ ]
+• Game Idea - [ ]__
+• Tech Stack - [ ]__
+• WireFrames - [ ]__
+• MVP Goals - [ ]__
+• Stretch Goals - [ ]__
+• Roadblocks - [ ]__
 
 ## Story of the Game
 You're in mysterious world, left with a tank. All of sudden, enemy appears with a tank, trying to shoot you.
@@ -37,16 +37,20 @@ There are some obstacles in game. You will need to calculate the wind, make land
 ![plot](./concept/wireframe2.png)
 
 ## MVP Goal
-```mermaid
-gantt
-    title Timeline
+• Make HTML and CSS (Day1, 12/26)__
+• make DOM connection and wireframe function (Day2-4, 12/29)__
+• apply Cannon trajectory (Day5, 12/30)__
+• Start working on detal designs (Day 6-7, 1/03)__
+• Fix bug and make final delivery (Day8, 1/04)__
 
-    HTML | CSS :a1, 12-26, 1d
-    JS make tank move, 2d
-    JS cannon shoot trajectory, 1d
-    JS interfaces, 1d
-```
+## Stretch Goal
+• Apply Charactor Design to tank__
+• Add another type of cannon functions differently__
+• Apply different levels of map__
+• Add mobile version of the game__
 
-    
+## Roadblocks
+• Unfinished Tic Tac Toe assignment__
+• Family vacation trip at the end of the year for 3 days.
 
 
