@@ -26,11 +26,11 @@ There are some obstacles in game. You will need to calculate the wind, make land
 
 ## Tech Stack
 
-• html
-• CSS
-• JavaScript
-• Adobe Illustrator
-• Adobe Photoshop
+• html<br>
+• CSS<br>
+• JavaScript<br>
+• Adobe Illustrator<br>
+• Adobe Photoshop<br>
 
 ## WireFrames
 ![plot](./concept/wireframe1.png)
