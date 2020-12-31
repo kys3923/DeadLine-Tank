@@ -10,7 +10,9 @@ let enemyTankX = 0;
 const enemyTankMovdSPD = 1.5;
 let tankLeftPrssd = false;
 let tankRightPrssd = false;
-
+let allyCannonAngle = Math.PI / 180;
+let enemyCannonAngle = Math.PI / 180; 
+const cannonAngleDIF = Math.PI / 60;
 
 // drawTank();
 // drawEnemyTank();
@@ -18,17 +20,34 @@ let tankRightPrssd = false;
 
 
 // draw in canvas
-function tankDrawing(x, y, width, height) {
+function tankDrawing(x, y, width, height, cannonAngle) {
     this.x = x
     this.y = y
     this.width = width
     this.height = height
     this.alive = true
+    this.cannonAngle = cannonAngle
+    let cannonLength = width * Math.sqrt(2);
     this.render = function() {
         ctx.fillStyle = "red"
         ctx.fillRect(this.x, this.y, this.width, this.height)
+        if(allyTank) {
+            ctx.beginPath();
+            ctx.lineWidth = 5
+            ctx.strokeStyle = "red" 
+            ctx.moveTo(this.x + 25, this.y + 25)
+            ctx.lineTo((this.x + 25) + cannonLength * Math.cos(allyCannonAngle),
+            (this.y + 25) - cannonLength * Math.sin(allyCannonAngle)
+            );
+        } else {
+            return;
+        };
+        ctx.stroke();
+        ctx.closePath();
     }
 }
+
+
 let allyTank = new tankDrawing(0, 590, 50, 50)
 let enemyTank = new tankDrawing(910, 590, 50, 50)
 
@@ -57,13 +76,13 @@ let movementHandler = (e) => {
         allyTank.x -= allyTankMoveSPD
     }
     // arrow up
-    // else if (e.keyCode == "38") {
-
-    // }
+    else if (e.keyCode == "38" && allyCannonAngle <= Math.PI) {
+        allyCannonAngle += cannonAngleDIF
+    }
     // // arrow down
-    // else if (e.keyCode == "40") {
-
-    // }
+    else if (e.keyCode == "40" && allyCannonAngle >= 0) {
+        allyCannonAngle -= cannonAngleDIF
+    }
     // // space bar
     // else if (e.keyCode == "32") {
 
