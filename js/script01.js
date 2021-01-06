@@ -205,7 +205,7 @@ function waveOne() {
     enemyDo = 0;
     radi = 1;
     time = 10;
-    wave = 1
+    // wave = 1
     playerTurn = true;
 
     player01 = new player(20, 400, 32, 25, pIMG[0]);
@@ -447,7 +447,8 @@ function change() {
 
     if (by >= cheight + 20) {
         clearInterval(tid);
-        moveEnemy();
+        playerTurn = false;
+        playerTurns();
         let windState = Math.floor(Math.random()*4);
         if(windState == 0) {
             wind = -Math.random()*1.5;
@@ -463,14 +464,6 @@ function angleWrite() {
     uictx.font = "bold 50px helvetica"
     uictx.fillText(cannonAngle, 285, 100)
 };
-
-let setTimer = setInterval(() => {
-    time--;
-    if (time <= 0) {
-        clearInterval(setTimer);
-        playerTurn = false;
-    }
-}, 1000); 
 
 function uiDraw() {
     // wave
@@ -542,12 +535,21 @@ function gameSetup() {
 
 function playerTurns() {
     if(playerTurn) {
+        console.log("playerturn works")
+        moveGauge = 275;
+        time = 10;
         window.addEventListener("keydown", movementHandler, true);
         window.addEventListener("keypress", cannonPowerGauge, false);
         window.addEventListener("keyup", keyupHandler, false);
-        drawAll();
-        uiDraw();
-        console.log("playerturn works")
+        let setTimer = setInterval(() => {
+            time--;
+            if (time <= 0) {
+                clearInterval(setTimer);
+                playerTurn = false;
+            }
+        }, 1000); 
+        // drawAll();
+        // uiDraw();
     } else if(!playerTurn) {
         moveEnemy();
     }
@@ -555,6 +557,7 @@ function playerTurns() {
 
 function moveEnemy() {
     if(!playerTurn) {
+        console.log("enermy turn works")
         window.removeEventListener("keydown", movementHandler, true);
         window.removeEventListener("keypress", cannonPowerGauge, false);
         window.removeEventListener("keyup", keyupHandler, false);
@@ -564,11 +567,12 @@ function moveEnemy() {
             // drawAll();
 
             for (let i = 0; i < enemyArray.length; i++) {
+                console.log(" is it working? ")
                 if (enemyArray[i].x <= deadLine.x) {
                     gameOver();
                 }else {
                     playerTurns();
-                    PlayerTurn = true;
+                    playerTurn = true;
                 }
             }
             if(enemyArray.length == 0) {
@@ -585,7 +589,7 @@ function moveEnemy() {
                 if (enemyArray[i].x <= deadLine.x) {
                     gameOver();
                 }else {
-                    PlayerTurn = true;
+                    playerTurn = true;
                     playerTurns();
                 }
             }
@@ -605,7 +609,7 @@ function moveEnemy() {
                 if (enemyArray[i].x <= deadLine.x) {
                     gameOver();
                 } else {
-                    PlayerTurn = true;
+                    playerTurn = true;
                     playerTurns();
                 }
             }
