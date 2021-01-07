@@ -311,7 +311,7 @@ function movementHandler(event) {
                 
                 if(player01.x < 0) {player01.x = 0;};
                 
-                uiDraw();
+                // uiDraw();
             break;
         // right arrow
         case 39:
@@ -325,7 +325,7 @@ function movementHandler(event) {
                     let farRight = player01.x + player01.width;
                     farRight = 300;
                 };
-                uiDraw();
+                // uiDraw();
             break;
         // arrow up
         case 38:
@@ -336,7 +336,7 @@ function movementHandler(event) {
                 } else {
                     cannonAngle++;
                 }
-                uiDraw();
+                // uiDraw();
             break;
         // arrow down
         case 40:
@@ -347,26 +347,26 @@ function movementHandler(event) {
                 } else {
                     cannonAngle--;
                 }
-                uiDraw();
+                // uiDraw();
             break;
             default:
     }
     drawAll();       
 }
+let fillBox;
 
 function cannonPowerGauge(event) {
     let keyCode = window.event.keyCode;
     if(!(cannonVo > 100)) {
         switch(keyCode) {
             case 32:
-                let fillBox = 0;
+                fillBox = 0;
                 cannonVo = cannonVo + 1;
                 fillBox = cannonVo * 5;
                 if(fillBox > 275) {
                     fillBox = 275;
                 }
-                uictx.fillStyle = "rgb(82, 96, 46)";
-                uictx.fillRect(528, 24, fillBox, 19);
+                
             break;
             default:
             break;
@@ -386,10 +386,12 @@ function keyupHandler(event) {
     switch(keyCode) {
         case 32:
             fireCannon();
+            clearInterval(uiDraw);
+            clearInterval(setTimer);
             cannonVo = 1;
             uictx.clearRect(528, 24, 275, 19)
             uictx.drawImage(gameUIimg, 0, 0, uiwidth, uiheight);
-            uiDraw();
+            // uiDraw();
         break;
         default:
     }
@@ -446,6 +448,7 @@ function change() {
     }
 
     if (by >= cheight + 20) {
+        console.log("is it work?")
         clearInterval(tid);
         playerTurn = false;
         playerTurns();
@@ -455,7 +458,7 @@ function change() {
         }else if(windState == 1){
             wind = Math.random()*1.5;
         }else{}
-        uiDraw();
+        // uiDraw();
     }
     drawAll();    
 }
@@ -465,7 +468,28 @@ function angleWrite() {
     uictx.fillText(cannonAngle, 285, 100)
 };
 
+function setTimer() {
+    time--;
+    if (time <= 0 || !playerTurn) {
+        clearInterval(setTimer);
+        playerTurn = false;
+        moveEnemy();
+    }
+};
+
+function twoDigit(time) {
+    return (time < 10 ? "0" : "") + time;
+}
+
+function timeWrite() {
+    uictx.fillStyle = "white"
+    uictx.font = "bold 50px helvetica"
+    uictx.fillText(twoDigit(time), 417, 100);
+}
+
 function uiDraw() {
+    uictx.clearRect(0, 0, uiwidth, uiheight);
+    uictx.drawImage(gameUIimg, 0, 0, uiwidth, uiheight);
     // wave
     if(wave = 1) {
         uictx.fillStyle = "white"
@@ -483,9 +507,7 @@ function uiDraw() {
     // angle
         angleWrite();
     // Timer
-        uictx.fillStyle = "white"
-        uictx.font = "bold 50px helvetica"
-        uictx.fillText(time, 415, 100)
+        timeWrite();
     // move
         uictx.fillStyle = "rgb(82, 96, 46)";
         uictx.fillRect(528, 64, moveGauge, 19);
@@ -498,6 +520,9 @@ function uiDraw() {
         uictx.strokeStyle = "rgb(82, 96, 46)"
         uictx.lineWidth = 5;
         uictx.stroke();
+
+        uictx.fillStyle = "rgb(82, 96, 46)";
+        uictx.fillRect(528, 24, fillBox, 19);
 };
 
 function drawAll() {
@@ -530,7 +555,7 @@ function gameSetup() {
         finalWave();
         drawAll();
     }
-    uiDraw();
+    setInterval(uiDraw, 60);
 };
 
 function playerTurns() {
@@ -541,13 +566,7 @@ function playerTurns() {
         window.addEventListener("keydown", movementHandler, true);
         window.addEventListener("keypress", cannonPowerGauge, false);
         window.addEventListener("keyup", keyupHandler, false);
-        let setTimer = setInterval(() => {
-            time--;
-            if (time <= 0) {
-                clearInterval(setTimer);
-                playerTurn = false;
-            }
-        }, 1000); 
+        setInterval(setTimer, 1000)
         // drawAll();
         // uiDraw();
     } else if(!playerTurn) {
@@ -564,15 +583,15 @@ function moveEnemy() {
         if(wave = 1) {
             // enemy01.moveit(-enemySPD/10, 0/15);
             // enemy02.moveit(-enemySPD/10, 0/15);
-            // drawAll();
+            drawAll();
 
             for (let i = 0; i < enemyArray.length; i++) {
                 console.log(" is it working? ")
                 if (enemyArray[i].x <= deadLine.x) {
                     gameOver();
                 }else {
-                    playerTurns();
                     playerTurn = true;
+                    playerTurns();
                 }
             }
             if(enemyArray.length == 0) {
@@ -664,7 +683,6 @@ function clearGame() {
             event.offsetY >= 47 && event.offsetY <= 122
         ) {
             intro();
-            return(playerTurn);
         }
     });
 };
@@ -710,7 +728,6 @@ function gameOver() {
             event.offsetY >= 47 && event.offsetY <= 122
         ) {
             intro();
-            return(playerTurn);
         }
     });
 }
