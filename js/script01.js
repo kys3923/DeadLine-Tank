@@ -63,7 +63,7 @@ uiCanvas.addEventListener("click", (event) => {
 
 function removeRct() {
     uiCanvas.removeEventListener("click", (event));
-    uictx.clearRect(0, 0, uiwidth, uiheight);
+    uictx.clearRect(20, 10, 50, 100);
 };
 
 // stating elements
@@ -431,7 +431,7 @@ function change() {
         if((bx >= enemyArray[i].x) && (bx <= (enemyArray[i].x + enemyArray[i].width)) &&
         (by >= enemyArray[i].y) && (by <= (enemyArray[i].y + enemyArray[i].height))) {
             dtEnemy.play();
-            dtEnemy.currentTime = 0.2;
+            dtEnemy.currentTime = 0.6;
             enemyArray.splice(i, 1);
         }
     }
